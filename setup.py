@@ -1,7 +1,10 @@
-from setuptools import find_namespace_packages, setup
+from setuptools import find_packages, setup
+
+import nbapi
 
 PACKAGENAME = "nbapi"
-VERSION = "0.0.1"
+VERSION = nbapi.__version__
+
 INSTALL_REQUIRES = [
     "pandas",
     "pip",
@@ -14,10 +17,9 @@ setup(
     name=PACKAGENAME,
     version=VERSION,
     description="Python interface to NBA Stats API.",
-    url="git@github.com:jondeans/nbapi.git",
-    author="@jondeans",
-    license="",
-    packages=find_namespace_packages(),
+    url="http://github.com/jondeans/nbapi",
+    author="Jon Deans",
+    packages=find_packages(),
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
 )
