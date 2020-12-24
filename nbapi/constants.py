@@ -7,6 +7,11 @@ _curr_date = datetime.today()
 _curr_month = _curr_date.month
 _curr_year = _curr_date.year
 
+if _curr_month >= 7:
+    CURRENT_SEASON = f"{_curr_year}-{_curr_year+1[2:]}"
+else:
+    CURRENT_SEASON = f"{_curr_year-1}-{_curr_year[2:]}"
+
 TEAMS = {
     "ATL": {
         "abbr": "ATL",
