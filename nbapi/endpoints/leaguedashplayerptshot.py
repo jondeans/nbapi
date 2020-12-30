@@ -1,0 +1,42 @@
+from nbapi.endpoints._base import Endpoint
+
+
+class LeagueDashPtShot(Endpoint):
+    endpoint = "leaguedashptshot"
+    params = {
+        "CloseDefDistRange": "",
+        "College": "",
+        "Conference": "",
+        "Country": "",
+        "DateFrom": "",
+        "DateTo": "",
+        "Division": "",
+        "DraftPick": "",
+        "DraftYear": "",
+        "DribbleRange": "",
+        "GameSegment": "",
+        "GeneralRange": "Overall",
+        "Height": "",
+        "LastNGames": 0,
+        "LeagueID": "00",
+        "Location": "",
+        "Month": 0,
+        "OpponentTeamID": 0,
+        "Outcome": "",
+        "PORound": 0,
+        "PerMode": "PerGame",
+        "Period": 0,
+        "PlayerExperience": "",
+        "PlayerPosition": "",
+        "Season": "2020-21",
+        "SeasonSegment": "",
+        "SeasonType": "Regular Season",
+        "ShotClockRange": "",
+        "ShotDistRange": "",
+        "StarterBench": "",
+        "TeamID": 0,
+        "TouchTimeRange": "",
+        "VsConference": "",
+        "VsDivision": "",
+        "Weight": "",
+    }
