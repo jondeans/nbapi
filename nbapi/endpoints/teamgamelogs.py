@@ -2,27 +2,27 @@ from nbapi.endpoints._base import Endpoint
 
 
 class TeamGameLogs(Endpoint):
-    endpoint = "teamgamelogs"
-    params = {
-        "DateFrom": "",
-        "DateTo": "",
-        "GameSegment": "",
+    _endpoint = "teamgamelogs"
+    _params = {
+        "DateFrom": None,
+        "DateTo": None,
+        "GameSegment": None,
         "LastNGames": 0,
         "LeagueID": "00",
-        "Location": "",
+        "Location": None,
         "MeasureType": "Base",
         "Month": 0,
         "OppTeamID": 0,
-        "Outcome": "",
+        "Outcome": None,
         "PORound": 0,
         "PerMode": "Totals",
         "Period": 0,
-        "PlayerID": "",
-        "SeasonSegment": "",
+        "PlayerID": None,
+        "SeasonSegment": None,
         "SeasonType": "Regular Season",
         "SeasonYear": "2020-21",
-        "ShotClockRange": "",
-        "TeamID": "",
-        "VsConference": "",
-        "VsDivision": "",
+        "ShotClockRange": None,
+        "TeamID": None,
+        "VsConference": None,
+        "VsDivision": None,
     }

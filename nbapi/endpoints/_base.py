@@ -1,6 +1,12 @@
 """Classes and helper functions for NBA Stats Endpoints."""
 
+import warnings
+
 import requests
+
+import nbapi.logger as log
+
+logger = log.get_logger(__name__)
 
 BASE_URL = "http://stats.nba.com/stats/"
 HEADERS = {
@@ -16,28 +22,37 @@ HEADERS = {
     "x-nba-stats-origin": "stats",
     "x-nba-stats-token": "true",
 }
+TIMEOUT = 30
 
 
 class Endpoint:
     """Base class for Endpoints."""
 
-    endpoint = None
-    params = None
-    headers = HEADERS
-
-    response = None
+    _endpoint = None
+    _response = None
+    _params = None
 
     def __init__(self, get_request=False):
         if get_request:
-            self.response = self.get_request()
+            self.get_request()
+        logger.info(f"RESPONSE: {self._response}")
 
     def load_response(self, idx=0):
         # TODO: Load data tables specific to this endpoint, into this object, here.
-
         # TODO: if HAS_PANDAS can return a DataFrame?
         #   or should we just return a DataFrame friendly structure?
 
-        endpoint_json = self.response.json()
+        if self._response is None:
+            logger.info("WARNING: No response found. Did you get your request yet?")
+            return self._response
+
+        endpoint_json = self._response.json()
+
+        if (
+            endpoint_json["resource"] != self._endpoint
+            or endpoint_json["parameters"] != self._params
+        ):
+            warnings.warn("Resource or parameters data does not match Endpoint.")
 
         try:
             columns = endpoint_json["resultSets"][idx]["headers"]
@@ -51,19 +66,21 @@ class Endpoint:
                 data = endpoint_json["resultSets"]["rowSet"]
 
         return [dict(zip(columns, d)) for d in data]
-        pass
+
+    def get_endpoint(self):
+        return self._endpoint
 
     def get_url(self):
-        return self.response.url()
+        return self._response.url
 
     def get_response(self):
-        return self.response
+        return self._response
 
     def get_json(self):
-        return self.response.json()
+        return self._response.json()
 
     def get_params(self):
-        return self.params
+        return self._params
 
     def update_params(self, params):
         """Update the parameters dictionary.
@@ -71,9 +88,13 @@ class Endpoint:
         Args:
             params: Dictionary of parameter values to set / update for this endpoints.
         """
-        self.params.update(params)
+        self._params.update(params)
 
     def get_request(self):
-        return requests.get(
-            BASE_URL + self.endpoint, params=self.params, headers=HEADERS
+        # TODO: Can add a debug and cache option here.
+        self._response = requests.get(
+            BASE_URL + self._endpoint,
+            params=self._params,
+            headers=HEADERS,
+            timeout=TIMEOUT,
         )

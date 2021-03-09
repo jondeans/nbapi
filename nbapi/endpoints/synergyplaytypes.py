@@ -2,8 +2,8 @@ from nbapi.endpoints._base import Endpoint
 
 
 class SynergyPlayTypes(Endpoint):
-    endpoint = "synergyplaytypes"
-    params = {
+    _endpoint = "synergyplaytypes"
+    _params = {
         "LeagueID": "00",
         "PerMode": "PerGame",
         "PlayType": "Isolation",

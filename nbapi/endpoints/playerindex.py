@@ -2,20 +2,20 @@ from nbapi.endpoints._base import Endpoint
 
 
 class PlayerIndex(Endpoint):
-    endpoint = "playerindex"
-    params = {
-        "Active": "",
-        "AllStar": "",
-        "College": "",
-        "Country": "",
-        "DraftPick": "",
-        "DraftYear": "",
-        "Height": "",
+    _endpoint = "playerindex"
+    _params = {
+        "Active": None,
+        "AllStar": None,
+        "College": None,
+        "Country": None,
+        "DraftPick": None,
+        "DraftYear": None,
+        "Height": None,
         "Historical": 1,
         "LeagueID": "00",
-        "PlayerPosition": "",
+        "PlayerPosition": None,
         # TODO: Update the season?
         "Season": "2020-21",
         "TeamID": 0,
-        "Weight": "",
+        "Weight": None,
     }
