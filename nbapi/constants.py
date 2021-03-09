@@ -8,30 +8,34 @@ _curr_month = _curr_date.month
 _curr_year = _curr_date.year
 
 if _curr_month >= 7:
-    CURRENT_SEASON = f"{_curr_year}-{_curr_year+1[2:]}"
+    CURRENT_SEASON = f"{_curr_year}-{(_curr_year+1) % 100}"
 else:
-    CURRENT_SEASON = f"{_curr_year-1}-{_curr_year[2:]}"
+    CURRENT_SEASON = f"{_curr_year-1}-{_curr_year % 100}"
 
 
-class DefaultBlank(Enum):
+class DefaultBlank:
     Default = ""
 
 
-class DefaultN(Enum):
-    Default = "N"
+class DefaultN:
+    Y = "Y"
+    N = "N"
+    Default = N
 
 
-class Default0(Enum):
+class DefaultZero:
+    Zero = "0"
+    One = "1"
     Default = "0"
 
 
-class League(Enum):
+class League:
     NBA = "00"
     ABA = "01"
     Default = NBA
 
 
-class PerMode(Enum):
+class PerMode:
     Totals = "Totals"
     PerGame = "PerGame"
     MinutesPer = "MinutesPer"
@@ -46,13 +50,13 @@ class PerMode(Enum):
     Default = PerGame
 
 
-class SeasonType(Enum):
+class SeasonType:
     Regular = "Regular Season"
     Playoffs = "Playoffs"
     Default = Regular
 
 
-class MeasureType(Enum):
+class MeasureType:
     Base = "Base"
     Advanced = "Advanced"
     Misc = "Misc"
@@ -63,11 +67,11 @@ class MeasureType(Enum):
     Default = Base
 
 
-class PtMeasureType(Enum):
+class PtMeasureType:
     SpeedDistance = "SpeedDistance"
 
 
-class GroupQuantity(Enum):
+class GroupQuantity:
     Default = 5
 
 
@@ -146,11 +150,11 @@ class Rank(DefaultN):
     pass
 
 
-class OpponentTeamID(Default0):
+class OpponentTeamID(DefaultZero):
     pass
 
 
-class Period(Default0):
+class Period(DefaultZero):
     AllQuarters = "0"
     FirstQuarter = "1"
     SecondQuarter = "2"
@@ -158,11 +162,11 @@ class Period(Default0):
     FourthQuarter = "4"
 
 
-class LastNGames(Default0):
+class LastNGames(DefaultZero):
     pass
 
 
-class PlayoffRound(Default0):
+class PlayoffRound(DefaultZero):
     All = "0"
     QuarterFinals = "1"
     SemiFinals = "2"
@@ -170,7 +174,7 @@ class PlayoffRound(Default0):
     Finals = "4"
 
 
-class Month(Default0):
+class Month(DefaultZero):
     All = "0"
     October = "1"
     November = "2"
@@ -186,15 +190,15 @@ class Month(Default0):
     September = "12"
 
 
-class RangeType(Default0):
+class RangeType(DefaultZero):
     pass
 
 
-class StartRange(Default0):
+class StartRange(DefaultZero):
     pass
 
 
-class EndRange(Default0):
+class EndRange(DefaultZero):
     pass
 
 
@@ -258,7 +262,7 @@ class Division(VsDivision):
     pass
 
 
-class TeamID(Default0):
+class TeamID(DefaultZero):
     pass
 
 
