@@ -5,8 +5,10 @@ channels:
   - default
 
 dependencies:
+  - datatable
   - pandas
   - pip
   - python>=3.8
   - requests
+  - requests-cache
   - setuptools

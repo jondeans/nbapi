@@ -3,6 +3,7 @@
 import warnings
 
 import requests
+from datatable import dt, f
 
 import nbapi.logger as log
 
@@ -31,6 +32,7 @@ class Endpoint:
     _endpoint = None
     _response = None
     _params = None
+    _table = None
 
     def __init__(self, get_request=False):
         if get_request:
@@ -43,7 +45,10 @@ class Endpoint:
         #   or should we just return a DataFrame friendly structure?
 
         if self._response is None:
-            logger.info("WARNING: No response found. Did you get your request yet?")
+            warnings.warn(
+                f"WARNING: No response found for {self._endpoint!r}. Did you get your request yet?"
+            )
+            # logger.info(f"WARNING: No response found for {self._endpoint!r}. Did you get your request yet?")
             return self._response
 
         endpoint_json = self._response.json()
@@ -52,7 +57,7 @@ class Endpoint:
             endpoint_json["resource"] != self._endpoint
             or endpoint_json["parameters"] != self._params
         ):
-            warnings.warn("Resource or parameters data does not match Endpoint.")
+            warnings.warn("Resource or parameters data does not match submission.")
 
         try:
             columns = endpoint_json["resultSets"][idx]["headers"]
@@ -65,7 +70,10 @@ class Endpoint:
                 columns = endpoint_json["resultSets"]["headers"]
                 data = endpoint_json["resultSets"]["rowSet"]
 
-        return [dict(zip(columns, d)) for d in data]
+        self._table = dt.Frame([dict(zip(columns, d)) for d in data])
+
+    def get_table(self):
+        return self._table
 
     def get_endpoint(self):
         return self._endpoint
@@ -75,9 +83,6 @@ class Endpoint:
 
     def get_response(self):
         return self._response
-
-    def get_json(self):
-        return self._response.json()
 
     def get_params(self):
         return self._params

@@ -6,10 +6,12 @@ PACKAGENAME = "nbapi"
 VERSION = nbapi.__version__
 
 INSTALL_REQUIRES = [
+    "datatable",
     "pandas",
     "pip",
     "python>=3.8",
     "requests",
+    "requests-cache",
     "setuptools",
 ]
 
@@ -18,8 +20,9 @@ setup(
     version=VERSION,
     description="Python interface to NBA Stats API.",
     url="http://github.com/jondeans/nbapi",
-    author="Jon Deans",
-    packages=find_packages(),
+    author="jondeans",
+    keywords="nba sports",
+    packages=find_packages(exclude=["docs", "tests*"]),
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
 )
