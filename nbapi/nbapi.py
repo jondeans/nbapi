@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-import nbapi.logger as log
+import nbapi.core.logger as log
 
 logger = log.get_logger(__name__)
 

@@ -3,9 +3,9 @@
 import warnings
 
 import requests
-from datatable import dt, f
+from datatable import dt
 
-import nbapi.logger as log
+import nbapi.core.logger as log
 
 logger = log.get_logger(__name__)
 

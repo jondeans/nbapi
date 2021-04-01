@@ -2,19 +2,17 @@
 
 from datatable import f
 
-import nbapi.logger as log
+import nbapi.core.logger as log
+from nbapi.core.result import Result
 from nbapi.endpoints.playerindex import PlayerIndex
 
 logger = log.get_logger(__name__)
 
 
-class PlayerList:
+class PlayerList(Result):
     """Represents a list of player from NBA Stats."""
 
-    _player_frame = None
-
-    @classmethod
-    def from_playerindex(cls):
+    def __init__(self):
         player_index = PlayerIndex()
         logger.info(f"ENDPOINT: {player_index.get_endpoint()}")
         logger.info(f"PARAMS: {player_index.get_params()}")
@@ -22,13 +20,12 @@ class PlayerList:
         player_index.get_request()
         player_index.load_response()
 
-        cls._player_frame = player_index.get_table()
-        return cls()
+        self._frame = player_index.get_table()
 
     def find_player(self, query=None, by=None):
         if by == "id":
-            return self._player_frame[f.PERSON_ID == query, :]
+            return self._frame[f.PERSON_ID == query, :]
         if by == "first":
-            return self._player_frame[f.PLAYER_FIRST_NAME == query, :]
+            return self._frame[f.PLAYER_FIRST_NAME == query, :]
         if by == "last":
-            return self._player_frame[f.PLAYER_LAST_NAME == query, :]
+            return self._frame[f.PLAYER_LAST_NAME == query, :]
