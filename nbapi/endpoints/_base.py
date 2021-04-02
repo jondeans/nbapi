@@ -32,7 +32,6 @@ class Endpoint:
     _endpoint = None
     _response = None
     _params = None
-    _table = None
 
     def __init__(self, get_request=False):
         if get_request:
@@ -40,10 +39,6 @@ class Endpoint:
         logger.info(f"RESPONSE: {self._response}")
 
     def load_response(self, idx=0):
-        # TODO: Load data tables specific to this endpoint, into this object, here.
-        # TODO: if HAS_PANDAS can return a DataFrame?
-        #   or should we just return a DataFrame friendly structure?
-
         if self._response is None:
             warnings.warn(
                 f"WARNING: No response found for {self._endpoint!r}. Did you get your request yet?"
@@ -70,10 +65,7 @@ class Endpoint:
                 columns = endpoint_json["resultSets"]["headers"]
                 data = endpoint_json["resultSets"]["rowSet"]
 
-        self._table = dt.Frame([dict(zip(columns, d)) for d in data])
-
-    def get_table(self):
-        return self._table
+        return dt.Frame([dict(zip(columns, d)) for d in data])
 
     def get_endpoint(self):
         return self._endpoint

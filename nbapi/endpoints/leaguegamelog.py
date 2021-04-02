@@ -2,7 +2,7 @@ from nbapi.endpoints._base import Endpoint
 
 
 class LeagueGameLog(Endpoint):
-    _endpoint = "leaguegamelog"
+    _endpoint = "7"
     _params = {
         "Counter": 1000,
         "DateFrom": None,
