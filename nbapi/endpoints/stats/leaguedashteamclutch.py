@@ -1,38 +1,39 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeagueDashPtDefend(Endpoint):
-    _endpoint = "leaguedashptdefend"
+class LeagueDashTeamClutch(Endpoint):
+    _endpoint = "leaguedashteamclutch"
     _params = {
-        "College": None,
+        "AheadBehind": "Ahead or Behind",
+        "ClutchTime": "Last 5 Minutes",
         "Conference": None,
-        "Country": None,
         "DateFrom": None,
         "DateTo": None,
-        "DefenseCategory": "Overall",
         "Division": None,
-        "DraftPick": None,
-        "DraftYear": None,
+        "GameScope": None,
         "GameSegment": None,
-        "Height": None,
         "LastNGames": 0,
         "LeagueID": "00",
         "Location": None,
+        "MeasureType": "Base",
         "Month": 0,
         "OpponentTeamID": 0,
         "Outcome": None,
         "PORound": 0,
+        "PaceAdjust": "N",
         "PerMode": "PerGame",
         "Period": 0,
         "PlayerExperience": None,
-        "PlayerID": None,
         "PlayerPosition": None,
+        "PlusMinus": "N",
+        "PointDiff": 5,
+        "Rank": "N",
         "Season": "2020-21",
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
+        "ShotClockRange": None,
         "StarterBench": None,
         "TeamID": 0,
         "VsConference": None,
         "VsDivision": None,
-        "Weight": None,
     }

@@ -1,10 +1,9 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeagueDashPtShot(Endpoint):
-    _endpoint = "leaguedashptshot"
+class LeagueDashPlayerBioStats(Endpoint):
+    _endpoint = "leaguedashplayerbiostats"
     _params = {
-        "CloseDefDistRange": None,
         "College": None,
         "Conference": None,
         "Country": None,
@@ -13,9 +12,8 @@ class LeagueDashPtShot(Endpoint):
         "Division": None,
         "DraftPick": None,
         "DraftYear": None,
-        "DribbleRange": None,
+        "GameScope": None,
         "GameSegment": None,
-        "GeneralRange": "Overall",
         "Height": None,
         "LastNGames": 0,
         "LeagueID": "00",
@@ -32,10 +30,8 @@ class LeagueDashPtShot(Endpoint):
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
         "ShotClockRange": None,
-        "ShotDistRange": None,
         "StarterBench": None,
         "TeamID": 0,
-        "TouchTimeRange": None,
         "VsConference": None,
         "VsDivision": None,
         "Weight": None,

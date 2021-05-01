@@ -1,18 +1,18 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeagueHustleStatsTeam(Endpoint):
-    _endpoint = "leaguehustlestatsteam"
+class LeagueDashOppPtShot(Endpoint):
+    _endpoint = "leaguedashoppptshot"
     _params = {
-        "College": None,
+        "CloseDefDistRange": None,
         "Conference": None,
-        "Country": None,
         "DateFrom": None,
         "DateTo": None,
         "Division": None,
-        "DraftPick": None,
-        "DraftYear": None,
-        "Height": None,
+        "DribbleRange": None,
+        "GameSegment": None,
+        "GeneralRange": "Overall",
+        "LastNGames": 0,
         "LeagueID": "00",
         "Location": None,
         "Month": 0,
@@ -20,13 +20,14 @@ class LeagueHustleStatsTeam(Endpoint):
         "Outcome": None,
         "PORound": 0,
         "PerMode": "PerGame",
-        "PlayerExperience": None,
-        "PlayerPosition": None,
+        "Period": 0,
         "Season": "2020-21",
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
+        "ShotClockRange": None,
+        "ShotDistRange": None,
         "TeamID": 0,
+        "TouchTimeRange": None,
         "VsConference": None,
         "VsDivision": None,
-        "Weight": None,
     }

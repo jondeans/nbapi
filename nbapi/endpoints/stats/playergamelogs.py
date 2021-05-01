@@ -1,8 +1,8 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeaguePlayerOnDetails(Endpoint):
-    _endpoint = "leagueplayerondetails"
+class PlayerGameLogs(Endpoint):
+    _endpoint = "playergamelogs"
     _params = {
         "DateFrom": None,
         "DateTo": None,
@@ -10,19 +10,19 @@ class LeaguePlayerOnDetails(Endpoint):
         "LastNGames": 0,
         "LeagueID": "00",
         "Location": None,
-        "MeasureType": "Opponent",
+        "MeasureType": "Base",
         "Month": 0,
-        "OpponentTeamID": 0,
+        "OppTeamID": 0,
         "Outcome": None,
-        "PaceAdjust": "N",
-        "PerMode": "Per100Possessions",
+        "PORound": 0,
+        "PerMode": "Totals",
         "Period": 0,
-        "PlusMinus": "N",
-        "Rank": "N",
-        "Season": "2020-21",
+        "PlayerID": None,
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
-        "TeamID": 0,
+        "SeasonYear": "2020-21",
+        "ShotClockRange": None,
+        "TeamID": None,
         "VsConference": None,
         "VsDivision": None,
     }

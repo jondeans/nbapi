@@ -5,10 +5,10 @@ from pathlib import Path
 from datatable import f
 
 import nbapi.core.logger as log
-from nbapi.endpoints.commonteamroster import CommonTeamRoster
-from nbapi.endpoints.commonteamyears import CommonTeamYears
-from nbapi.endpoints.teamdetails import TeamDetails
-from nbapi.endpoints.teaminfocommon import TeamInfoCommon
+from nbapi.endpoints.stats.commonteamroster import CommonTeamRoster
+from nbapi.endpoints.stats.commonteamyears import CommonTeamYears
+from nbapi.endpoints.stats.teamdetails import TeamDetails
+from nbapi.endpoints.stats.teaminfocommon import TeamInfoCommon
 
 logger = log.get_logger(__name__)
 

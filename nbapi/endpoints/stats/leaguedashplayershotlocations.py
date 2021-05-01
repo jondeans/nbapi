@@ -1,14 +1,15 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeagueDashPlayerStats(Endpoint):
-    _endpoint = "leaguedashplayerstats"
+class LeagueDashPlayerShotLocations(Endpoint):
+    _endpoint = "leaguedashplayershotlocations"
     _params = {
         "College": None,
         "Conference": None,
         "Country": None,
         "DateFrom": None,
         "DateTo": None,
+        "DistanceRange": "5ft Range",
         "Division": None,
         "DraftPick": None,
         "DraftYear": None,
@@ -36,7 +37,6 @@ class LeagueDashPlayerStats(Endpoint):
         "ShotClockRange": None,
         "StarterBench": None,
         "TeamID": 0,
-        "TwoWay": 0,
         "VsConference": None,
         "VsDivision": None,
         "Weight": None,

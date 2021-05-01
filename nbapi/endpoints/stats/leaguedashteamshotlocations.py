@@ -1,22 +1,16 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.stats._base import Endpoint
 
 
-class LeagueDashPlayerClutch(Endpoint):
-    _endpoint = "leaguedashplayerclutch"
+class LeagueDashTeamShotLocations(Endpoint):
+    _endpoint = "leaguedashteamshotlocations"
     _params = {
-        "AheadBehind": "Ahead or Behind",
-        "ClutchTime": "Last 5 Minutes",
-        "College": None,
         "Conference": None,
-        "Country": None,
         "DateFrom": None,
         "DateTo": None,
+        "DistanceRange": "5ft Range",
         "Division": None,
-        "DraftPick": None,
-        "DraftYear": None,
         "GameScope": None,
         "GameSegment": None,
-        "Height": None,
         "LastNGames": 0,
         "LeagueID": "00",
         "Location": None,
@@ -31,7 +25,6 @@ class LeagueDashPlayerClutch(Endpoint):
         "PlayerExperience": None,
         "PlayerPosition": None,
         "PlusMinus": "N",
-        "PointDiff": 5,
         "Rank": "N",
         "Season": "2020-21",
         "SeasonSegment": None,
@@ -41,5 +34,4 @@ class LeagueDashPlayerClutch(Endpoint):
         "TeamID": 0,
         "VsConference": None,
         "VsDivision": None,
-        "Weight": None,
     }

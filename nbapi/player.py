@@ -5,7 +5,7 @@ from pathlib import Path
 from datatable import f
 
 import nbapi.core.logger as log
-from nbapi.endpoints.playerindex import PlayerIndex
+from nbapi.endpoints.stats.playerindex import PlayerIndex
 
 logger = log.get_logger(__name__)
 

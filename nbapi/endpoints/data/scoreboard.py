@@ -1,8 +1,8 @@
-from nbapi.endpoints._base import Endpoint
+from nbapi.endpoints.data._base import Endpoint
 
 
-class PlayerIndex(Endpoint):
-    _endpoint = "playerindex"
+class Scoreboard(Endpoint):
+    _endpoint = "scoreboard"
     _params = {
         "Active": None,
         "AllStar": None,
