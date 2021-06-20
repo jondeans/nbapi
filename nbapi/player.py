@@ -32,7 +32,10 @@ class PlayerList:
 
     def to_csv(self, directory=None):
         directory = Path(directory)
-        self._index.to_csv(str(directory / "playerindex.csv.gz"))
+        self._index.to_csv(str(directory / "playerindex.csv"))
+        logger.info(
+            f"Saved {self._index.nrows:,} records to {directory / 'playerindex.csv'}."
+        )
 
     def get_index(self):
         return self._index
