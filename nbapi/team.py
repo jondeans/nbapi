@@ -7,6 +7,7 @@ import datatable as dt
 from datatable import f
 
 import nbapi.core.logger as log
+from nbapi.core.constants import CURRENT_YEAR
 from nbapi.endpoints.stats.commonteamroster import CommonTeamRoster
 from nbapi.endpoints.stats.commonteamyears import CommonTeamYears
 from nbapi.endpoints.stats.teamdetails import TeamDetails
@@ -39,6 +40,9 @@ class TeamList:
 
     def get_info(self):
         return self._info
+
+    def get_active_teams(self):
+        return self._info[f.MAX_YEAR == CURRENT_YEAR, :]
 
 
 class TeamSummary:

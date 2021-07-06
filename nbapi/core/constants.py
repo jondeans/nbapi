@@ -9,8 +9,10 @@ _curr_year = _curr_date.year
 
 if _curr_month >= 7:
     CURRENT_SEASON = f"{_curr_year}-{(_curr_year+1) % 100}"
+    CURRENT_YEAR = _curr_year
 else:
     CURRENT_SEASON = f"{_curr_year-1}-{_curr_year % 100}"
+    CURRENT_YEAR = _curr_year - 1
 
 
 class DefaultBlank:
