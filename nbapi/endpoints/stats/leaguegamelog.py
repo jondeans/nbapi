@@ -1,7 +1,11 @@
-from nbapi.endpoints.stats._base import Endpoint
+from nbapi.endpoints.endpoints import StatsEndpoint
+
+import nbapi.core.logger as log
+
+logger = log.get_logger(__name__)
 
 
-class LeagueGameLog(Endpoint):
+class LeagueGameLog(StatsEndpoint):
     _endpoint = "7"
     _params = {
         "Counter": 1000,

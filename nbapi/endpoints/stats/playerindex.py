@@ -1,7 +1,11 @@
-from nbapi.endpoints.stats._base import Endpoint
+from nbapi.endpoints.endpoints import StatsEndpoint
+
+import nbapi.core.logger as log
+
+logger = log.get_logger(__name__)
 
 
-class PlayerIndex(Endpoint):
+class PlayerIndex(StatsEndpoint):
     _endpoint = "playerindex"
     _params = {
         "Active": None,

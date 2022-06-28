@@ -1,7 +1,11 @@
-from nbapi.endpoints.stats._base import Endpoint
+from nbapi.endpoints.endpoints import StatsEndpoint
+
+import nbapi.core.logger as log
+
+logger = log.get_logger(__name__)
 
 
-class LeagueDashTeamShotLocations(Endpoint):
+class LeagueDashTeamShotLocations(StatsEndpoint):
     _endpoint = "leaguedashteamshotlocations"
     _params = {
         "Conference": None,
