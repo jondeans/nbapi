@@ -5,10 +5,9 @@ channels:
   - default
 
 dependencies:
-  - datatable
-  - pandas
+  - python>=3.9,<3.10
+  - setuptools >= 40.9.0
   - pip
-  - python>=3.8
-  - requests
-  - requests-cache
-  - setuptools
+  - pip:
+      - -r requirements.txt
+      - -r requirements-dev.txt

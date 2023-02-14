@@ -1,10 +1,13 @@
 """Custom logging handlers."""
 
 import logging
+import os
+import sys
+from typing import Union
 
 
-def get_logger(logger_name, level=logging.INFO) -> logging.Logger:
-    """Creates a custom logger for handling messages.
+def get_logger(logger_name: str = None) -> logging.Logger:
+    """Creates a custom logger for handling messages to `stderr`.
 
     The logger name hierarchy is analogous to the Python package hierarchy, and
     identical to it if you organise your loggers on a per-module basis using the
@@ -13,30 +16,72 @@ def get_logger(logger_name, level=logging.INFO) -> logging.Logger:
 
     Args:
         logger_name: Name to assign to the logger, e.g. `__name__` or `__file__`.
-        level: Level of logging to return.
     Returns:
-        logger
+        Logger
     """
-    logging.basicConfig(
-        level=level,
-        format="%(levelname)8s : %(asctime)s : %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-    return logging.getLogger(logger_name)
+
+    ch = logging.StreamHandler(stream=sys.stdout)
+    ch.setFormatter(CustomFormatter())
+    logging.basicConfig(handlers=[ch])
+    logger = logging.getLogger(logger_name)
+    return logger
 
 
-def set_verbosity(verbose=False):
-    """Sets logging level for the module.
+def set_verbosity(level: Union[str, int, bool] = logging.WARNING) -> None:
+    """Sets logging level for the `nbapi` module.
+
+    Valid strings = ["WARNING", "INFO", "DEBUG", "ERROR", "CRITICAL"]
+    Valid ints = [0, 10, 20, 30, 40, 50]
 
     logging.DEBUG if verbose==True
     logging.WARNING if verbose==False
 
     Args:
-        verbose: Boolean flag to set logging level to DEBUG if True.
+        level: Logging level. ["WARNING", "INFO", "DEBUG", "ERROR", "CRITICAL"]
+            You can pass `int` representations of these levels.
+            You can a boolean True = "INFO" / False = "WARNING"
     """
 
-    top_logger = logging.getLogger("nbapi")
-    if verbose:
-        top_logger.setLevel(logging.DEBUG)
-    else:
-        top_logger.setLevel(logging.WARNING)
+    level = os.environ.get("LOGLEVEL", level)
+
+    top_logger = get_logger("nbapi")
+
+    if isinstance(level, bool):
+        if level:
+            top_logger.setLevel(logging.DEBUG)
+        else:
+            top_logger.setLevel(logging.WARNING)
+    elif isinstance(level, str):
+        if level in ["WARNING", "INFO", "DEBUG", "ERROR", "CRITICAL"]:
+            top_logger.setLevel(level)
+    elif isinstance(level, int):
+        if level in [0, 10, 20, 30, 40, 50]:
+            top_logger.setLevel(level)
+
+
+class CustomFormatter(logging.Formatter):
+    """Custom colored log output."""
+
+    gray = "\x1b[38;20m"
+    yellow = "\x1b[33;20m"
+    red = "\x1b[31;20m"
+    white_on_red = "\x1b[31;47m"
+    reset = "\x1b[0m"
+
+    format = "  %(asctime)s | %(levelname)8s | %(message)s"
+
+    datefmt = "%H:%M:%S"
+
+    FORMATS = {
+        logging.INFO: gray + format + reset,
+        logging.DEBUG: gray + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: white_on_red + format + reset,
+    }
+
+    def format(self, record):
+        """Custom format records."""
+        log_format = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_format)
+        return formatter.format(record)

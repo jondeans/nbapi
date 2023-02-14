@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=40.9.0", "wheel"]
+
+[tool.black]
+line_length = 90
+language_version = "python3.10"
+
+[tool.isort]
+py_version=310
+combine_as_imports = true
+force_grid_wrap = 0
+include_trailing_comma = true
+known_first_party = ["nbapi"]
+line_length = 90
+multi_line_output = 3
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "-rAvs --import-mode=importlib"
+testpaths = ["tests"]

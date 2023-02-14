@@ -1,7 +1,11 @@
-from nbapi.endpoints.data._base import Endpoint
+from nbapi.endpoints.endpoints import DataEndpoint
+
+import nbapi.core.logger as log
+
+logger = log.get_logger(__name__)
 
 
-class Scoreboard(Endpoint):
+class Scoreboard(DataEndpoint):
     _endpoint = "scoreboard"
     _params = {
         "Active": None,
