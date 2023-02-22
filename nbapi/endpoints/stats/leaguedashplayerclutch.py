@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class LeagueDashPlayerClutch(StatsEndpoint):
+    """Endpoint for `leaguedashplayerclutch`."""
+
     _endpoint = "leaguedashplayerclutch"
     _params = {
         "AheadBehind": "Ahead or Behind",

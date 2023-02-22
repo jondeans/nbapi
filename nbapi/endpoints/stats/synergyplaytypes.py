@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class SynergyPlayTypes(StatsEndpoint):
+    """Endpoint for `synergyplaytypes`."""
+
     _endpoint = "synergyplaytypes"
     _params = {
         "LeagueID": "00",

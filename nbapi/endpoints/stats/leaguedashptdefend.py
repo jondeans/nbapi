@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class LeagueDashPtDefend(StatsEndpoint):
+    """Endpoint for `leaguedashptdefend`."""
+
     _endpoint = "leaguedashptdefend"
     _params = {
         "College": None,

@@ -2,9 +2,11 @@
 
 from pathlib import Path
 
+import datatable as dt
 from datatable import f
 
 import nbapi.core.logger as log
+from nbapi.core.types import FilePath
 from nbapi.endpoints.stats.playerindex import PlayerIndex
 
 logger = log.get_logger(__name__)
@@ -16,26 +18,28 @@ class PlayerList:
     def __init__(self):
         endpoint = PlayerIndex()
 
-        logger.info(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.info(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
+        logger.debug(f"PARAMS: {endpoint.get_params()}")
 
         endpoint.get_request()
-        self._index = endpoint.load_response(idx=0)
+        self._data = endpoint.load_response()
 
-    def find_player(self, query=None, by=None):
+    def find_player(self, query: str = None, by: str = None) -> dt.Frame:
+        """Retrieve information for a single player."""
         if by == "id":
-            return self._index[f.PERSON_ID == query, :]
+            return self._data[f.PERSON_ID == query, :]
         if by == "first":
-            return self._index[f.PLAYER_FIRST_NAME == query, :]
+            return self._data[f.PLAYER_FIRST_NAME == query, :]
         if by == "last":
-            return self._index[f.PLAYER_LAST_NAME == query, :]
+            return self._data[f.PLAYER_LAST_NAME == query, :]
 
-    def to_csv(self, directory=None):
+    def to_csv(self, directory: FilePath) -> None:
+        """Save the full player table to disk."""
         directory = Path(directory)
-        self._index.to_csv(str(directory / "playerindex.csv"))
-        logger.info(
-            f"Saved {self._index.nrows:,} records to {directory / 'playerindex.csv'}."
-        )
+        self._data.to_csv(str(directory / "playerindex.csv"))
+        logger.info(f"Saved {self._data.nrows:,} records to {directory / 'playerindex.csv'}.")
 
-    def get_index(self):
-        return self._index
+    @property
+    def data(self):
+        """Get the player data table."""
+        return self._data

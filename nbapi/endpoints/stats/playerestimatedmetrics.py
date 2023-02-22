@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class PlayerEstimatedMetrics(StatsEndpoint):
+    """Endpoint for `playerestimatedmetrics`."""
+
     _endpoint = "playerestimatedmetrics"
     _params = {
         "LeagueID": "00",

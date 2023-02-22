@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class TeamInfoCommon(StatsEndpoint):
+    """Endpoint for `teaminfocommon`."""
+
     _endpoint = "teaminfocommon"
     _params = {
         "TeamID": 0,

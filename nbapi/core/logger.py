@@ -1,4 +1,4 @@
-"""Custom logging handlers."""
+"""Custom logging handlers for nbapi."""
 
 import logging
 import os
@@ -7,7 +7,7 @@ from typing import Union
 
 
 def get_logger(logger_name: str = None) -> logging.Logger:
-    """Creates a custom logger for handling messages to `stderr`.
+    """Creates a custom logger for handling messages from `nbapi` to `stderr`.
 
     The logger name hierarchy is analogous to the Python package hierarchy, and
     identical to it if you organise your loggers on a per-module basis using the

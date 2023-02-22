@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class LeaguePlayerOnDetails(StatsEndpoint):
+    """Endpoint for `leagueplayerondetails`."""
+
     _endpoint = "leagueplayerondetails"
     _params = {
         "DateFrom": None,

@@ -1,11 +1,9 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
 
-import nbapi.core.logger as log
-
-logger = log.get_logger(__name__)
-
 
 class LeagueDashPtShot(StatsEndpoint):
+    """Endpoint for `leaguedashptshot`."""
+
     _endpoint = "leaguedashptshot"
     _params = {
         "CloseDefDistRange": None,

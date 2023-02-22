@@ -3,7 +3,7 @@ requires = ["setuptools>=40.9.0", "wheel"]
 
 [tool.black]
 line_length = 90
-language_version = "python3.10"
+language_version = "python3.9"
 
 [tool.isort]
 py_version=310

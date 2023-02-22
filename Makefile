@@ -4,7 +4,7 @@ check:
 	flake8 .
 
 env:
-	conda env create --file environment.yaml
+	conda env create --file environment.yml
 
 fix:
 	black .
