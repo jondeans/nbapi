@@ -6,7 +6,7 @@ line_length = 90
 language_version = "python3.9"
 
 [tool.isort]
-py_version=310
+py_version=39
 combine_as_imports = true
 force_grid_wrap = 0
 include_trailing_comma = true

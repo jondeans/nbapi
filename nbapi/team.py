@@ -1,15 +1,15 @@
 """Classes around Teams and Lists of Teams."""
 
 import pkgutil
-from typing import Union
 from pathlib import Path
+from typing import Union
 
 import datatable as dt
 from datatable import f
 
 import nbapi.core.logger as log
-from nbapi.core.types import FilePath
 from nbapi.core.constants import CURRENT_YEAR
+from nbapi.core.types import FilePath
 from nbapi.endpoints.stats.commonteamroster import CommonTeamRoster
 from nbapi.endpoints.stats.commonteamyears import CommonTeamYears
 from nbapi.endpoints.stats.teamdetails import TeamDetails
@@ -19,6 +19,7 @@ logger = log.get_logger(__name__)
 
 
 def _get_team_abbrev(team_id: str) -> str:
+    """Lookup team abbreviations."""
     team_data = pkgutil.get_data(__name__, "data/teams.tsv").decode()
     df = dt.Frame(team_data)
     return df[f.id == team_id, "abbr"][0, 0]
@@ -48,7 +49,9 @@ class TeamList:
         """Save full team table to disk."""
         directory = Path(directory)
         self._data.to_csv(str(directory / "teamlist_data.csv"))
-        logger.info(f"Saved {self._data.nrows:,} records to {directory /  'teamlist_data.csv')}.")
+        logger.info(
+            f"Saved {self._data.nrows:,} records to {directory /  'teamlist_data.csv'}."
+        )
 
     @property
     def data(self) -> dt.Frame:
@@ -145,21 +148,39 @@ class TeamDetail:
         prefix = f"teamdetails_{team_abbr}"
 
         self._background.to_csv(str(directory / (prefix + "_background.csv")))
-        logger.info(f"Saved {self._background.nrows:,} records to {directory / (prefix + '_background.csv')}.")
+        logger.info(
+            f"Saved {self._background.nrows:,} records to {directory / (prefix + '_background.csv')}."
+        )
         self._history.to_csv(str(directory / (prefix + "_history.csv")))
-        logger.info(f"Saved {self._history.nrows:,} records to {directory / (prefix + '_history.csv')}.")
+        logger.info(
+            f"Saved {self._history.nrows:,} records to {directory / (prefix + '_history.csv')}."
+        )
         self._social_sites.to_csv(str(directory / (prefix + "_social_sites.csv")))
-        logger.info(f"Saved {self._social_sites.nrows:,} records to {directory / (prefix + '_social_sites.csv')}.")
-        self._awards_championships.to_csv(str(directory / (prefix + "_awards_championships.csv")))
-        logger.info(f"Saved {self._awards_championships.nrows:,} records to {directory / (prefix + '_awards_championships.csv')}.")
+        logger.info(
+            f"Saved {self._social_sites.nrows:,} records to {directory / (prefix + '_social_sites.csv')}."
+        )
+        self._awards_championships.to_csv(
+            str(directory / (prefix + "_awards_championships.csv"))
+        )
+        logger.info(
+            f"Saved {self._awards_championships.nrows:,} records to {directory / (prefix + '_awards_championships.csv')}."
+        )
         self._awards_conf.to_csv(str(directory / (prefix + "_awards_conf.csv")))
-        logger.info(f"Saved {self._awards_conf.nrows:,} records to {directory / (prefix + '_awards_conf.csv')}.")
+        logger.info(
+            f"Saved {self._awards_conf.nrows:,} records to {directory / (prefix + '_awards_conf.csv')}."
+        )
         self._awards_div.to_csv(str(directory / (prefix + "_awards_div.csv")))
-        logger.info(f"Saved {self._awards_div.nrows:,} records to {directory / (prefix + '_awards_div.csv')}.")
+        logger.info(
+            f"Saved {self._awards_div.nrows:,} records to {directory / (prefix + '_awards_div.csv')}."
+        )
         self._hof.to_csv(str(directory / (prefix + "_hof.csv")))
-        logger.info(f"Saved {self._hof.nrows:,} records to {directory / (prefix + '_hof.csv')}.")
+        logger.info(
+            f"Saved {self._hof.nrows:,} records to {directory / (prefix + '_hof.csv')}."
+        )
         self._retired.to_csv(str(directory / (prefix + "_retired.csv")))
-        logger.info(f"Saved {self._retired.nrows:,} records to {directory / (prefix + '_retired.csv')}.")
+        logger.info(
+            f"Saved {self._retired.nrows:,} records to {directory / (prefix + '_retired.csv')}."
+        )
 
     @property
     def background(self) -> dt.Frame:
@@ -232,9 +253,13 @@ class TeamCommonRoster:
         prefix = f"teamcommonroster_{team_abbr}_{self._params['Season']}"
 
         self._roster.to_csv(str(directory / (prefix + "_roster.csv")))
-        logger.info(f"Saved {self._roster.nrows:,} records to {directory / (prefix + '_roster.csv')}.")
+        logger.info(
+            f"Saved {self._roster.nrows:,} records to {directory / (prefix + '_roster.csv')}."
+        )
         self._coaches.to_csv(str(directory / (prefix + "_coaches.csv")))
-        logger.info(f"Saved {self._coaches.nrows:,} records to {directory / (prefix + '_coaches.csv')}.")
+        logger.info(
+            f"Saved {self._coaches.nrows:,} records to {directory / (prefix + '_coaches.csv')}."
+        )
 
     @property
     def roster(self) -> dt.Frame:
