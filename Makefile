@@ -1,20 +1,16 @@
 check:
-	black nbapi --check
-	isort -c nbapi
-	flake8 nbapi
-
-dev:
-	pip install -r requirements-dev.txt
-	pre-commit install
+	black . --check
+	isort -c .
+	flake8 .
 
 env:
-	conda env create -f environment.yaml
+	conda env create --file environment.yml
 
 fix:
-	black nbapi
-	isort nbapi
+	black .
+	isort .
 
-update-env:
-	conda env update -f environment.yaml -prune
+test:
+	python -m pytest tests
 
-.PHONY: check dev env fix update-env
+.PHONY: check env fix test

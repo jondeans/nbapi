@@ -1,25 +1,12 @@
-from setuptools import find_packages, setup
+from pathlib import Path
 
-import nbapi
+import pkg_resources
+from setuptools import setup
 
-PACKAGENAME = "nbapi"
-VERSION = nbapi.__version__
+with Path("requirements.txt").open() as reqs:
+    install_requires = [str(req) for req in pkg_resources.parse_requirements(reqs)]
 
-INSTALL_REQUIRES = [
-    "pandas",
-    "pip",
-    "python>=3.8",
-    "requests",
-    "setuptools",
-]
+with Path("requirements-dev.txt").open() as reqs:
+    install_requires_dev = [str(req) for req in pkg_resources.parse_requirements(reqs)]
 
-setup(
-    name=PACKAGENAME,
-    version=VERSION,
-    description="Python interface to NBA Stats API.",
-    url="http://github.com/jondeans/nbapi",
-    author="Jon Deans",
-    packages=find_packages(),
-    zip_safe=False,
-    install_requires=INSTALL_REQUIRES,
-)
+setup(install_requires=install_requires, extras_requires={"dev": install_requires_dev})

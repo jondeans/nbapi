@@ -1,4 +1,5 @@
-black
-flake8
-isort
+black==22.12.0
+flake8==6.0.0
+isort==5.12.0
 pre-commit
+pytest>=6.0.0
