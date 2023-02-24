@@ -35,10 +35,9 @@ class TeamList:
         logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
-
         self._data = endpoint.load_response()
 
-    def find_team(self, query: str = None, by: str = None) -> dt.Frame:
+    def find_team(self, query: str, by: str) -> dt.Frame:
         """Retrieve information for a single team."""
         if by == "id":
             return self._data[f.TEAM_ID == query, :]

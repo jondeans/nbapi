@@ -24,7 +24,7 @@ class PlayerList:
         endpoint.get_request()
         self._data = endpoint.load_response()
 
-    def find_player(self, query: str = None, by: str = None) -> dt.Frame:
+    def find_player(self, query: str, by: str) -> dt.Frame:
         """Retrieve information for a single player."""
         if by == "id":
             return self._data[f.PERSON_ID == query, :]
@@ -36,6 +36,7 @@ class PlayerList:
     def to_csv(self, directory: FilePath) -> None:
         """Save the full player table to disk."""
         directory = Path(directory)
+        directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
         self._data.to_csv(str(directory / "playerindex.csv"))
         logger.info(
             f"Saved {self._data.nrows:,} records to {directory / 'playerindex.csv'}."
@@ -44,4 +45,4 @@ class PlayerList:
     @property
     def data(self):
         """Get the player data table."""
-        return self._data
+        return self._data.copy()

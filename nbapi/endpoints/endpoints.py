@@ -63,19 +63,7 @@ class Endpoint:
             results = results[index]
         col_names = results["headers"]
         data = results["rowSet"]
-        dt.Frame([dict(zip(col_names, d)) for d in data])
-
-        try:
-            columns = endpoint_json["resultSets"][index]["headers"]
-            data = endpoint_json["resultSets"][index]["rowSet"]
-        except KeyError:
-            try:
-                columns = endpoint_json["resultSet"][index]["headers"]
-                data = endpoint_json["resultSet"][index]["rowSet"]
-            except KeyError:
-                columns = endpoint_json["resultSets"]["headers"]
-                data = endpoint_json["resultSets"]["rowSet"]
-        return dt.Frame([dict(zip(columns, d)) for d in data])
+        return dt.Frame([dict(zip(col_names, d)) for d in data])
 
     @property
     def endpoint(self) -> str:
