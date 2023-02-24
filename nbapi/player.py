@@ -18,8 +18,8 @@ class PlayerList:
     def __init__(self):
         endpoint = PlayerIndex()
 
-        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.debug(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.endpoint}")
+        logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
         self._data = endpoint.load_response()
@@ -37,7 +37,9 @@ class PlayerList:
         """Save the full player table to disk."""
         directory = Path(directory)
         self._data.to_csv(str(directory / "playerindex.csv"))
-        logger.info(f"Saved {self._data.nrows:,} records to {directory / 'playerindex.csv'}.")
+        logger.info(
+            f"Saved {self._data.nrows:,} records to {directory / 'playerindex.csv'}."
+        )
 
     @property
     def data(self):

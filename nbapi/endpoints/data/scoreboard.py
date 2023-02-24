@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import DataEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class Scoreboard(DataEndpoint):
@@ -17,7 +18,7 @@ class Scoreboard(DataEndpoint):
         "LeagueID": "00",
         "PlayerPosition": None,
         # TODO: Update the season?
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "TeamID": 0,
         "Weight": None,
     }

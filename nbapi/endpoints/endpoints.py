@@ -13,49 +13,57 @@ logger = log.get_logger(__name__)
 class Endpoint:
     """Base class for Endpoints."""
 
+    _endpoint: str = None
+    _response: str = None
+    _params: dict = dict()
+    _timeout: int = 30
+    _base_url: str = None
+    _headers: dict = {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Connection": "keep-alive",
+        "Host": "stats.nba.com",
+        "Referer": "https://stats.nba.com",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0",
+        "x-nba-stats-origin": "stats",
+        "x-nba-stats-token": "true",
+    }
+
     def __init__(self, get_request: bool = False):
-        self._base_url = None
-        self._headers = {
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Connection": "keep-alive",
-            "Host": "stats.nba.com",
-            "Referer": "https://stats.nba.com",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0",
-            "x-nba-stats-origin": "stats",
-            "x-nba-stats-token": "true"
-        }
-        self._timeout = 30
-
-        self._endpoint = None
-        self._response = None
-        self._params = None
-
         if get_request:
             self.get_request()
-        logger.debug(f"RESPONSE: {self._response}")
+        logger.debug(f"RESPONSE: {self.response}")
 
     def _check_endpoint_response(self, json: dict) -> bool:
         """Check that the response and parameters match what we submitted."""
         matches = True
         matches *= json["resource"] == self._endpoint
         matches *= json["parameters"] == self._params
-        return matches
+        return bool(matches)
 
     def load_response(self, index: int = 0) -> Union[dt.Frame, None]:
         """Load the json response and return the table at `resultSet[index]`."""
 
         if not self._response:
-            logger.warning(f"No response found for {self._endpoint!r}. Did you get your request yet?")
+            logger.warning(
+                f"No response found for {self._endpoint!r}. Did you get your request yet?"
+            )
             return self._response
 
         endpoint_json = self._response.json()
 
-        if self._check_endpoint_response(endpoint_json):
-            logger.warning("Resource or parameters data does not match submission.")
+        if not self._check_endpoint_response(endpoint_json):
+            logger.warning("Endpoint or Parameters do not match submission.")
+
+        results = endpoint_json.get("resultSets", endpoint_json.get("resultSet"))
+        if isinstance(results, list) and index is not None:
+            results = results[index]
+        col_names = results["headers"]
+        data = results["rowSet"]
+        dt.Frame([dict(zip(col_names, d)) for d in data])
 
         try:
             columns = endpoint_json["resultSets"][index]["headers"]
@@ -100,6 +108,7 @@ class Endpoint:
     def get_request(self):
         """Submit the GET request for the current endpoint."""
         # TODO: Can add a debug and cache option here.
+        #   currently just using requests-cache to reduce frequency of calls.
         self._response = requests.get(
             self._base_url + self._endpoint,
             params=self._params,

@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class PlayerIndex(StatsEndpoint):
@@ -16,8 +17,7 @@ class PlayerIndex(StatsEndpoint):
         "Historical": 1,
         "LeagueID": "00",
         "PlayerPosition": None,
-        # TODO: Update the season?
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "TeamID": 0,
         "Weight": None,
     }

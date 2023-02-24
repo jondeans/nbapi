@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class PlayerEstimatedMetrics(StatsEndpoint):
@@ -7,6 +8,6 @@ class PlayerEstimatedMetrics(StatsEndpoint):
     _endpoint = "playerestimatedmetrics"
     _params = {
         "LeagueID": "00",
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "SeasonType": "Regular Season",
     }

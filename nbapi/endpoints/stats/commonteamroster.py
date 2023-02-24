@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class CommonTeamRoster(StatsEndpoint):
@@ -8,5 +9,5 @@ class CommonTeamRoster(StatsEndpoint):
     _params = {
         "TeamID": 0,
         "LeagueID": "00",
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
     }

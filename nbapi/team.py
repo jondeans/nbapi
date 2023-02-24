@@ -31,8 +31,8 @@ class TeamList:
     def __init__(self):
         endpoint = CommonTeamYears()
 
-        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.debug(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.endpoint}")
+        logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
 
@@ -48,6 +48,7 @@ class TeamList:
     def to_csv(self, directory: FilePath) -> None:
         """Save full team table to disk."""
         directory = Path(directory)
+        directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
         self._data.to_csv(str(directory / "teamlist_data.csv"))
         logger.info(
             f"Saved {self._data.nrows:,} records to {directory /  'teamlist_data.csv'}."
@@ -56,7 +57,7 @@ class TeamList:
     @property
     def data(self) -> dt.Frame:
         """Get the team info data table."""
-        return self._data
+        return self._data.copy()
 
     def get_active_teams(self) -> dt.Frame:
         """Get table with only active teams."""
@@ -66,32 +67,31 @@ class TeamList:
 class TeamSummary:
     """Represents basic info on a single team from NBA Stats."""
 
-    _params = None
-
-    def __init__(self, team_id: Union[int, str], season: str):
+    def __init__(self, team_id: Union[int, str], season: str = None):
         endpoint = TeamInfoCommon()
 
-        if team_id:
-            endpoint.update_params({"TeamID": int(team_id)})
-        if season:
+        endpoint.update_params({"TeamID": int(team_id)})
+        if season is not None:
             endpoint.update_params({"Season": season})
 
-        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.debug(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.endpoint}")
+        logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
+
         self._data = endpoint.load_response()
         self._ranks = endpoint.load_response(index=1)
-        self._params = endpoint.get_params()
+        self._team_id = int(team_id)
+        self._season = endpoint.params["Season"]
 
     def to_csv(self, directory: FilePath) -> None:
         """Save full summary and ranks tables to disk."""
 
         directory = Path(directory)
+        directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
 
-        team_abbr = _get_team_abbrev(self._params["TeamID"])
-
-        prefix = f"teamsummary_{team_abbr}_{self._params['Season']}"
+        team_abbr = _get_team_abbrev(self._team_id)
+        prefix = f"teamsummary_{team_abbr}_{self._season}"
 
         self._data.to_csv(str(directory / (prefix + "_data.csv")))
         logger.info(
@@ -105,12 +105,12 @@ class TeamSummary:
     @property
     def data(self) -> dt.Frame:
         """Get the team summary table."""
-        return self._data
+        return self._data.copy()
 
     @property
     def ranks(self) -> dt.Frame:
         """Get the team ranks."""
-        return self._ranks
+        return self._ranks.copy()
 
 
 class TeamDetail:
@@ -120,12 +120,10 @@ class TeamDetail:
 
     def __init__(self, team_id: Union[int, str]):
         endpoint = TeamDetails()
+        endpoint.update_params({"TeamID": int(team_id)})
 
-        if team_id:
-            endpoint.update_params({"TeamID": int(team_id)})
-
-        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.debug(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.endpoint}")
+        logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
         self._background = endpoint.load_response()
@@ -136,15 +134,15 @@ class TeamDetail:
         self._awards_div = endpoint.load_response(index=5)
         self._hof = endpoint.load_response(index=6)
         self._retired = endpoint.load_response(index=7)
-        self._params = endpoint.get_params()
+        self._team_id = int(team_id)
 
     def to_csv(self, directory: FilePath) -> None:
         """Save all tables to disk."""
 
         directory = Path(directory)
+        directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
 
-        team_abbr = _get_team_abbrev(self._params["TeamID"])
-
+        team_abbr = _get_team_abbrev(self._team_id)
         prefix = f"teamdetails_{team_abbr}"
 
         self._background.to_csv(str(directory / (prefix + "_background.csv")))
@@ -185,72 +183,71 @@ class TeamDetail:
     @property
     def background(self) -> dt.Frame:
         """Get the background table."""
-        return self._background
+        return self._background.copy()
 
     @property
     def history(self) -> dt.Frame:
         """Get the history table."""
-        return self._history
+        return self._history.copy()
 
     @property
     def social_sites(self) -> dt.Frame:
         """Get the social-sites table."""
-        return self._social_sites
+        return self._social_sites.copy()
 
     @property
     def awards_championships(self) -> dt.Frame:
         """Get the awards-championships table."""
-        return self._awards_championships
+        return self._awards_championships.copy()
 
     @property
     def awards_conf(self) -> dt.Frame:
         """Get the awards-conf table."""
-        return self._awards_conf
+        return self._awards_conf.copy()
 
     @property
     def awards_div(self) -> dt.Frame:
         """Get the awards-div table."""
-        return self._awards_div
+        return self._awards_div.copy()
 
     @property
     def hof(self) -> dt.Frame:
         """Get the hall-of-fame table."""
-        return self._hof
+        return self._hof.copy()
 
     @property
     def retired(self) -> dt.Frame:
         """Get the retired table."""
-        return self._retired
+        return self._retired.copy()
 
 
 class TeamCommonRoster:
     """Represents common-roster info on a single team from NBA Stats."""
 
-    _params = None
-
-    def __init__(self, team_id: Union[int, str], season: str):
+    def __init__(self, team_id: Union[int, str], season: str = None):
         endpoint = CommonTeamRoster()
 
-        if team_id is not None:
-            endpoint.update_params({"TeamID": int(team_id)})
+        endpoint.update_params({"TeamID": int(team_id)})
         if season is not None:
             endpoint.update_params({"Season": season})
 
-        logger.debug(f"ENDPOINT: {endpoint.get_endpoint()}")
-        logger.debug(f"PARAMS: {endpoint.get_params()}")
+        logger.debug(f"ENDPOINT: {endpoint.endpoint}")
+        logger.debug(f"PARAMS: {endpoint.params}")
 
         endpoint.get_request()
         self._roster = endpoint.load_response()
         self._coaches = endpoint.load_response(index=1)
-        self._params = endpoint.get_params()
+        self._team_id = int(team_id)
+        self._season = endpoint.params["Season"]
 
     def to_csv(self, directory: FilePath) -> None:
         """Save all tables to disk."""
 
         directory = Path(directory)
-        team_abbr = _get_team_abbrev(self._params["TeamID"])
+        directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
 
-        prefix = f"teamcommonroster_{team_abbr}_{self._params['Season']}"
+        team_abbr = _get_team_abbrev(self._team_id)
+        prefix = f"teamcommonroster_{team_abbr}_{self._season}"
 
         self._roster.to_csv(str(directory / (prefix + "_roster.csv")))
         logger.info(
@@ -264,9 +261,9 @@ class TeamCommonRoster:
     @property
     def roster(self) -> dt.Frame:
         """Get the roster table."""
-        return self._roster
+        return self._roster.copy()
 
     @property
     def coaches(self) -> dt.Frame:
         """Get the coaches table."""
-        return self._coaches
+        return self._coaches.copy()

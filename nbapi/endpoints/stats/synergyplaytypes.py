@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class SynergyPlayTypes(StatsEndpoint):
@@ -11,6 +12,6 @@ class SynergyPlayTypes(StatsEndpoint):
         "PlayType": "Isolation",
         "PlayerOrTeam": "P",  # TODO: P or T here
         "SeasonType": "Regular Season",
-        "SeasonYear": "2020-21",
+        "SeasonYear": CURRENT_SEASON,
         "TypeGrouping": "offensive",
     }

@@ -1,4 +1,4 @@
 datatable
 pandas
 requests
-requests-cache
+requests-cache @ git+ssh://git@github.com/requests-cache/requests-cache.git

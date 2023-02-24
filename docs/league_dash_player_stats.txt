@@ -26,7 +26,7 @@ PlayerExperience: null
 PlayerPosition: null
 PlusMinus: "N"
 Rank: "N"
-Season: "2020-21"
+Season: "2022-23"
 SeasonSegment: null
 SeasonType: "Regular Season"
 ShotClockRange: null

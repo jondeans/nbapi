@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class LeagueDashPtDefend(StatsEndpoint):
@@ -29,7 +30,7 @@ class LeagueDashPtDefend(StatsEndpoint):
         "PlayerExperience": None,
         "PlayerID": None,
         "PlayerPosition": None,
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
         "StarterBench": None,

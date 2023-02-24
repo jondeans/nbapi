@@ -4,7 +4,7 @@ ActiveFlag: null
 LeagueID: "00"
 PerMode: "PerGame"
 Scope: "S"
-Season: "2020-21"
+Season: "2022-23"
 SeasonType: "Regular Season"
 StatCategory: "PTS"
 

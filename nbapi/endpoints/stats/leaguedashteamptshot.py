@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class LeagueDashTeamPtShot(StatsEndpoint):
@@ -23,7 +24,7 @@ class LeagueDashTeamPtShot(StatsEndpoint):
         "PORound": 0,
         "PerMode": "PerGame",
         "Period": 0,
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
         "ShotClockRange": None,

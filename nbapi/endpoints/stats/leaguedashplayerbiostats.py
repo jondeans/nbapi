@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class LeagueDashPlayerBioStats(StatsEndpoint):
@@ -28,7 +29,7 @@ class LeagueDashPlayerBioStats(StatsEndpoint):
         "Period": 0,
         "PlayerExperience": None,
         "PlayerPosition": None,
-        "Season": "2020-21",
+        "Season": CURRENT_SEASON,
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
         "ShotClockRange": None,

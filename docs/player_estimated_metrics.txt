@@ -1,7 +1,7 @@
 # PLAYER ESTIMATED METRICS
 
 LeagueID: "00"
-Season: "2020-21"
+Season: "2022-23"
 SeasonType: "Regular Season"
 
 0: "PLAYER_ID"

@@ -1,4 +1,5 @@
 from nbapi.endpoints.endpoints import StatsEndpoint
+from nbapi.nbapi import CURRENT_SEASON
 
 
 class TeamGameLogs(StatsEndpoint):
@@ -22,7 +23,7 @@ class TeamGameLogs(StatsEndpoint):
         "PlayerID": None,
         "SeasonSegment": None,
         "SeasonType": "Regular Season",
-        "SeasonYear": "2020-21",
+        "SeasonYear": CURRENT_SEASON,
         "ShotClockRange": None,
         "TeamID": None,
         "VsConference": None,
