@@ -123,3 +123,9 @@ dmypy.json
 
 # VS Code stuff
 .vscode
+
+# PyBiomart dbs
+.pybiomart.sqlite
+
+# Ruff
+.ruff_cache
