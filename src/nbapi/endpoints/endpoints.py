@@ -3,7 +3,7 @@
 from typing import Union
 
 import requests
-from datatable import dt
+import pandas as pd
 
 from src import nbapi as log
 
@@ -44,7 +44,7 @@ class Endpoint:
         matches *= json["parameters"] == self._params
         return bool(matches)
 
-    def load_response(self, index: int = 0) -> Union[dt.Frame, None]:
+    def load_response(self, index: int = 0) -> Union[pd.DataFrame, None]:
         """Load the json response and return the table at `resultSet[index]`."""
 
         if not self._response:
@@ -63,7 +63,7 @@ class Endpoint:
             results = results[index]
         col_names = results["headers"]
         data = results["rowSet"]
-        return dt.Frame([dict(zip(col_names, d)) for d in data])
+        return pd.DataFrame([dict(zip(col_names, d)) for d in data])
 
     @property
     def endpoint(self) -> str:

@@ -4,8 +4,7 @@ import pkgutil
 from pathlib import Path
 from typing import Union
 
-import datatable as dt
-from datatable import f
+import pandas as pd
 
 from src import nbapi as log
 from src.nbapi.core.constants import CURRENT_YEAR
@@ -21,8 +20,8 @@ logger = log.get_logger(__name__)
 def _get_team_abbrev(team_id: str) -> str:
     """Lookup team abbreviations."""
     team_data = pkgutil.get_data(__name__, "data/teams.tsv").decode()
-    df = dt.Frame(team_data)
-    return df[f.id == team_id, "abbr"][0, 0]
+    df = pd.DataFrame(team_data)
+    return df.query(f"id == {team_id}")["abbr"][0, 0]
 
 
 class TeamList:
@@ -37,30 +36,28 @@ class TeamList:
         endpoint.get_request()
         self._data = endpoint.load_response()
 
-    def find_team(self, query: str, by: str) -> dt.Frame:
+    def find_team(self, query: str, by: str) -> pd.DataFrame:
         """Retrieve information for a single team."""
         if by == "id":
-            return self._data[f.TEAM_ID == query, :]
+            return self._data.query(f"TEAM_ID == {query}")
         if by == "abbr":
-            return self._data[f.ABBREVIATION == query, :]
+            return self._data.query(f"ABBREVIATION == {query}")
 
     def to_csv(self, directory: FilePath) -> None:
         """Save full team table to disk."""
         directory = Path(directory)
         directory.expanduser().absolute().mkdir(parents=True, exist_ok=True)
         self._data.to_csv(str(directory / "teamlist_data.csv"))
-        logger.info(
-            f"Saved {self._data.nrows:,} records to {directory /  'teamlist_data.csv'}."
-        )
+        logger.info(f"Saved {self._data.nrows:,} records to {directory /  'teamlist_data.csv'}.")
 
     @property
-    def data(self) -> dt.Frame:
+    def data(self) -> pd.DataFrame:
         """Get the team info data table."""
         return self._data.copy()
 
-    def get_active_teams(self) -> dt.Frame:
+    def get_active_teams(self) -> pd.DataFrame:
         """Get table with only active teams."""
-        return self._data[f.MAX_YEAR == CURRENT_YEAR, :]
+        return self._data.query("MAX_YEAR == CURRENT_YEAR")
 
 
 class TeamSummary:
@@ -93,21 +90,19 @@ class TeamSummary:
         prefix = f"teamsummary_{team_abbr}_{self._season}"
 
         self._data.to_csv(str(directory / (prefix + "_data.csv")))
-        logger.info(
-            f"Saved {self._data.nrows:,} records to {directory / (prefix + '_data.csv')}."
-        )
+        logger.info(f"Saved {self._data.nrows:,} records to {directory / (prefix + '_data.csv')}.")
         self._ranks.to_csv(str(directory / (prefix + "_ranks.csv")))
         logger.info(
             f"Saved {self._ranks.nrows:,} records to {directory / (prefix + '_ranks.csv')}."
         )
 
     @property
-    def data(self) -> dt.Frame:
+    def data(self) -> pd.DataFrame:
         """Get the team summary table."""
         return self._data.copy()
 
     @property
-    def ranks(self) -> dt.Frame:
+    def ranks(self) -> pd.DataFrame:
         """Get the team ranks."""
         return self._ranks.copy()
 
@@ -156,9 +151,7 @@ class TeamDetail:
         logger.info(
             f"Saved {self._social_sites.nrows:,} records to {directory / (prefix + '_social_sites.csv')}."
         )
-        self._awards_championships.to_csv(
-            str(directory / (prefix + "_awards_championships.csv"))
-        )
+        self._awards_championships.to_csv(str(directory / (prefix + "_awards_championships.csv")))
         logger.info(
             f"Saved {self._awards_championships.nrows:,} records to {directory / (prefix + '_awards_championships.csv')}."
         )
@@ -171,51 +164,49 @@ class TeamDetail:
             f"Saved {self._awards_div.nrows:,} records to {directory / (prefix + '_awards_div.csv')}."
         )
         self._hof.to_csv(str(directory / (prefix + "_hof.csv")))
-        logger.info(
-            f"Saved {self._hof.nrows:,} records to {directory / (prefix + '_hof.csv')}."
-        )
+        logger.info(f"Saved {self._hof.nrows:,} records to {directory / (prefix + '_hof.csv')}.")
         self._retired.to_csv(str(directory / (prefix + "_retired.csv")))
         logger.info(
             f"Saved {self._retired.nrows:,} records to {directory / (prefix + '_retired.csv')}."
         )
 
     @property
-    def background(self) -> dt.Frame:
+    def background(self) -> pd.DataFrame:
         """Get the background table."""
         return self._background.copy()
 
     @property
-    def history(self) -> dt.Frame:
+    def history(self) -> pd.DataFrame:
         """Get the history table."""
         return self._history.copy()
 
     @property
-    def social_sites(self) -> dt.Frame:
+    def social_sites(self) -> pd.DataFrame:
         """Get the social-sites table."""
         return self._social_sites.copy()
 
     @property
-    def awards_championships(self) -> dt.Frame:
+    def awards_championships(self) -> pd.DataFrame:
         """Get the awards-championships table."""
         return self._awards_championships.copy()
 
     @property
-    def awards_conf(self) -> dt.Frame:
+    def awards_conf(self) -> pd.DataFrame:
         """Get the awards-conf table."""
         return self._awards_conf.copy()
 
     @property
-    def awards_div(self) -> dt.Frame:
+    def awards_div(self) -> pd.DataFrame:
         """Get the awards-div table."""
         return self._awards_div.copy()
 
     @property
-    def hof(self) -> dt.Frame:
+    def hof(self) -> pd.DataFrame:
         """Get the hall-of-fame table."""
         return self._hof.copy()
 
     @property
-    def retired(self) -> dt.Frame:
+    def retired(self) -> pd.DataFrame:
         """Get the retired table."""
         return self._retired.copy()
 
@@ -258,11 +249,11 @@ class TeamCommonRoster:
         )
 
     @property
-    def roster(self) -> dt.Frame:
+    def roster(self) -> pd.DataFrame:
         """Get the roster table."""
         return self._roster.copy()
 
     @property
-    def coaches(self) -> dt.Frame:
+    def coaches(self) -> pd.DataFrame:
         """Get the coaches table."""
         return self._coaches.copy()

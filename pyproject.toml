@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "nbapi"
@@ -13,10 +13,9 @@ authors = [
 ]
 readme = "README.md"
 dependencies = [
-    "datatable",
     "pandas",
     "requests",
-    "requests-cache @ git+ssh://git@github.com/requests-cache/requests-cache",
+    "requests-cache@git+ssh://git@github.com/requests-cache/requests-cache",
 #    "html5lib",
 #    "lxml",
 #    "matplotlib",
