@@ -1,20 +1,44 @@
 [build-system]
-requires = ["setuptools>=40.9.0", "wheel"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.black]
-line_length = 90
-language_version = "python3.9"
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool.isort]
-py_version=39
-combine_as_imports = true
-force_grid_wrap = 0
-include_trailing_comma = true
-known_first_party = ["nbapi"]
-line_length = 90
-multi_line_output = 3
-profile = "black"
+[project]
+name = "nbapi"
+version = "0.1.0"
+description = "Python interface to NBA Stats API."
+requires-python = ">=3.10"
+license = {file = "LICENSE.md"}
+authors = [
+    {name = "Jon Deans", email = "jrdeans@gmail.com"},
+]
+readme = "README.md"
+dependencies = [
+    "endpointer@git+ssh://git@github.com/jondeans/endpointer",
+    "loguru",
+    "pandas",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy==1.9.0",
+    "pytest==8.1.1",
+    "ruff==0.3.4"
+]
+
+[project.urls]
+repository = "https://github.com/jondeans/nbapi"
 
 [tool.pytest.ini_options]
-addopts = "-rAvs --import-mode=importlib"
+addopts = "-r A -v -s --import-mode=importlib --doctest-modules"
 testpaths = ["tests"]
+python_files =[
+    "test_*.py",
+    "check_*.py",
+    "example_*.py"
+]
+
+[tool.ruff]
+line-length = 100

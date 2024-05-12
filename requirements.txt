@@ -1,4 +1,0 @@
-datatable
-pandas
-requests
-requests-cache

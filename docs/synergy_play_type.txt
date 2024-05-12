@@ -5,7 +5,7 @@ PerMode: "PerGame"
 PlayType: "Isolation"
 PlayerOrTeam: "P"
 SeasonType: "Regular Season"
-SeasonYear: "2020-21"
+SeasonYear: "2022-23"
 TypeGrouping: "offensive"
 
 0: "SEASON_ID"
