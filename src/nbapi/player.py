@@ -4,11 +4,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from src import nbapi as log
 from src.nbapi.core.types import FilePath
 from src.nbapi.endpoints.stats.playerindex import PlayerIndex
 
-logger = log.get_logger(__name__)
+from loguru import logger
 
 
 class PlayerList:

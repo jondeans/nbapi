@@ -23,7 +23,6 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
@@ -50,8 +49,10 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.py,cover
 .hypothesis/
 .pytest_cache/
+cover/
 
 # Translations
 *.mo
@@ -61,6 +62,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+db.sqlite3-journal
 
 # Flask stuff:
 instance/
@@ -73,6 +75,7 @@ instance/
 docs/_build/
 
 # PyBuilder
+.pybuilder/
 target/
 
 # Jupyter Notebook
@@ -85,8 +88,12 @@ ipython_config.py
 # pyenv
 .python-version
 
-# celery beat schedule file
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
 celerybeat-schedule
+celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
@@ -116,16 +123,19 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
-.pyre
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
 
 # PyCharm
 .idea
 
 # VS Code stuff
 .vscode
-
-# PyBiomart dbs
-.pybiomart.sqlite
 
 # Ruff
 .ruff_cache

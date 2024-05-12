@@ -6,15 +6,13 @@ from typing import Union
 
 import pandas as pd
 
-from src import nbapi as log
-from src.nbapi.core.constants import CURRENT_YEAR
 from src.nbapi.core.types import FilePath
 from src.nbapi.endpoints.stats.commonteamroster import CommonTeamRoster
 from src.nbapi.endpoints.stats.commonteamyears import CommonTeamYears
 from src.nbapi.endpoints.stats.teamdetails import TeamDetails
 from src.nbapi.endpoints.stats.teaminfocommon import TeamInfoCommon
 
-logger = log.get_logger(__name__)
+from loguru import logger
 
 
 def _get_team_abbrev(team_id: str) -> str:

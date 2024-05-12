@@ -1,37 +1,33 @@
-VENV = venv
-PYTHON_VERSION = 3.11
-PYTHON = $(VENV)/bin/python
-PIP = $(VENV)/bin/pip
+VENVDIR=.venv
+VENV=$(VENVDIR)/bin
+VENVPYTHON=$(VENV)/python
+VENVPIP=$(VENV)/pip
 
-.PHONY: check
-check:
-	black src/ --check
-	ruff check src/
-# 	isort -c src/
-# 	flake8 src/
-
-.PHONY: clean
-clean:
-	rm -rf $(VENV)
-
-venv:
-	python -m venv $(VENV)
-	$(PIP) install -U pip
-
-.PHONY: fix
-fix:
-	black src/
-	ruff src/
-# 	isort src/
-
-.PHONY: install
-install: venv
-	$(PIP) install -e .
+venv: $(VENV)/activate
+$(VENV)/activate: pyproject.toml
+	test -d $(VENVDIR) || python3 -m venv $(VENVDIR)
+	$(VENVPIP) install -U pip
+	$(VENVPIP) install -e .
+	touch $(VENV)/activate
 
 .PHONY: install-dev
 install-dev: venv
-	$(PIP) install -e ".[dev]"
+	$(VENVPIP) install -e ".[dev]"
+
+.PHONY: clean
+clean:
+	rm -rf $(VENVDIR)
+
+.PHONY: check
+check:
+	$(VENV)/ruff check src/ tests/
+	$(VENV)/ruff format --check src/ tests/
+
+.PHONY: fix
+fix:
+	$(VENV)/ruff check --fix src/ tests/
+	$(VENV)/ruff format src/ tests/
 
 .PHONY: test
 test:
-	$(PYTHON) -m pytest tests
+	$(VENVPYTHON) -m pytest tests

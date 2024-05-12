@@ -5,9 +5,7 @@ from typing import Union
 import requests
 import pandas as pd
 
-from src import nbapi as log
-
-logger = log.get_logger(__name__)
+from loguru import logger
 
 
 class Endpoint:
